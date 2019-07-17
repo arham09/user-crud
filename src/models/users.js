@@ -14,12 +14,54 @@ const pool = new db.Pool({
 
 pool.connect()
 
-model.getAsal = (callback) => {
-  pool.query('SELECT $1::int AS number', ['1'], (err, result) => {
+model.createUser = (user, callback) => {
+  const value = [user.fullname, user.email, 1, new Date(), new Date()]
 
-    const value = result.rows[0]
+  pool.query(`INSERT INTO users_tab (fullname, email, status, created, updated) VALUES($1, $2, $3, $4, $5) RETURNING *`, value, (err, result) => {
+    
+    const data = result.rows[0]
+    
+    callback(err, data)
+  })
+}
 
-    callback(err, value)
+model.getUsers = (callback) => {
+  pool.query('SELECT * FROM users_tab WHERE status = 1', (err, result) => {
+
+    const data = result.rows
+
+    callback(err, data)
+  })
+}
+
+model.getUser = (id, callback) => {
+  pool.query('SELECT * FROM users_tab WHERE status = 1 AND userid = $1', [id], (err, result) => {
+
+    const data = result.rows[0]
+
+    callback(err, data)
+  })
+}
+
+model.editUser = (id, user, callback) => {
+  const value = [user.fullname, user.email, new Date(), id]
+
+  pool.query('UPDATE users_tab SET fullname = $1, email = $2, updated = $3 WHERE userid = $4 RETURNING *', value, (err, result) => {
+    
+    const data = result.rows[0]
+
+    callback(err, data)
+  })
+}
+
+model.deleteUser = (id, callback) => {
+  const value = [0, new Date(), id]
+
+  pool.query('UPDATE users_tab SET status = $1, deleted = $2 WHERE userid = $3 RETURNING *', value, (err, result) => {
+    
+    const data = result.rows[0]
+
+    callback(err, data)
   })
 }
 
