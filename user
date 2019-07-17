@@ -1,0 +1,127 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.9 (Ubuntu 10.9-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.9 (Ubuntu 10.9-0ubuntu0.18.04.1)
+
+-- Started on 2019-07-17 23:56:14 WIB
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 13041)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2922 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 197 (class 1259 OID 49833)
+-- Name: users_tab; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_tab (
+    userid integer NOT NULL,
+    fullname character varying(255),
+    email character varying(255),
+    status integer,
+    created timestamp with time zone DEFAULT now() NOT NULL,
+    updated timestamp with time zone DEFAULT now() NOT NULL,
+    deleted timestamp with time zone
+);
+
+
+ALTER TABLE public.users_tab OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 49831)
+-- Name: users_tab_userid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_tab_userid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_tab_userid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2923 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: users_tab_userid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_tab_userid_seq OWNED BY public.users_tab.userid;
+
+
+--
+-- TOC entry 2787 (class 2604 OID 49836)
+-- Name: users_tab userid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_tab ALTER COLUMN userid SET DEFAULT nextval('public.users_tab_userid_seq'::regclass);
+
+
+--
+-- TOC entry 2914 (class 0 OID 49833)
+-- Dependencies: 197
+-- Data for Name: users_tab; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users_tab (userid, fullname, email, status, created, updated, deleted) VALUES (1, 'Andra The Backbone #2', 'tampan@gmail.com', 1, '2019-07-17 23:29:18.452+07', '2019-07-17 23:39:26.933+07', NULL);
+INSERT INTO public.users_tab (userid, fullname, email, status, created, updated, deleted) VALUES (2, NULL, NULL, 0, '2019-07-17 23:40:18.254+07', '2019-07-17 23:44:43.64+07', '2019-07-17 23:45:29.981+07');
+INSERT INTO public.users_tab (userid, fullname, email, status, created, updated, deleted) VALUES (3, 'Andra The Backbone #4', 'tampan@gmail.com', 0, '2019-07-17 23:46:11.688+07', '2019-07-17 23:46:11.688+07', '2019-07-17 23:46:17.874+07');
+
+
+--
+-- TOC entry 2924 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: users_tab_userid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_tab_userid_seq', 3, true);
+
+
+--
+-- TOC entry 2791 (class 2606 OID 49843)
+-- Name: users_tab users_tab_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_tab
+    ADD CONSTRAINT users_tab_pkey PRIMARY KEY (userid);
+
+
+-- Completed on 2019-07-17 23:56:15 WIB
+
+--
+-- PostgreSQL database dump complete
+--
+
